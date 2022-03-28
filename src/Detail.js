@@ -16,11 +16,16 @@ let 제목 = styled.h4`
 
 function Detail(props) {
   let [재고경고, 재고경고변경] = useState(true);
+  let [inputData, inputData변경] = useState("");
+
   useEffect(() => {
-    // let 타이머 = setTimeout(() => {
-    //   return <Rer></Rer>;
-    // }, 2000);
-  });
+    let 타이머 = setTimeout(() => {
+      재고경고변경(false);
+    }, 2000);
+    return () => {
+      clearTimeout(타이머);
+    };
+  }, []);
 
   let history = useHistory();
   let { id } = useParams();
@@ -28,20 +33,21 @@ function Detail(props) {
     return 상품.id == id;
   });
 
-  function 재고경고문() {
-    return (
-      <div id="rer" className="my-alert2">
-        <p>재고가 얼마 남지 않았습니다</p>
-      </div>
-    );
-  }
-
   return (
     <div className="container">
       <박스>
         <제목 className="red">Detail</제목>
-        <재고경고문 />
       </박스>
+      <input
+        onChange={(e) => {
+          inputData변경(e.target.value);
+        }}
+      />
+      {재고경고 === true ? (
+        <div id="rer" className="my-alert2">
+          <p>재고가 얼마 남지 않았습니다</p>
+        </div>
+      ) : null}
       <div className="row">
         <div className="col-md-6">
           <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
